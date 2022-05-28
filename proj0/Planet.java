@@ -16,50 +16,50 @@ public class Planet {
 
     /** The default constructor. */
     public Planet(double xP, double yP, double xV, double yV, double m, String img) {
-        xxPos = xP;
-        yyPos = yP;
-        xxVel = xV;
-        yyVel = yV;
-        mass = m;
-        imgFileName = img;
+        this.xxPos = xP;
+        this.yyPos = yP;
+        this.xxVel = xV;
+        this.yyVel = yV;
+        this.mass = m;
+        this.imgFileName = img;
     }
 
     /** The constructor that copies a planet. */
     public Planet(Planet p) {
-        xxPos = p.xxPos;
-        yyPos = p.yyPos;
-        xxVel = p.xxVel;
-        yyVel = p.yyVel;
-        mass = p.mass;
-        imgFileName = p.imgFileName;
+        this.xxPos = p.xxPos;
+        this.yyPos = p.yyPos;
+        this.xxVel = p.xxVel;
+        this.yyVel = p.yyVel;
+        this.mass = p.mass;
+        this.imgFileName = p.imgFileName;
     }
 
     /** The method that computes the distance from the current planet to the planet p. */
     public double calcDistance(Planet p) {
-        double dx = p.xxPos - xxPos;
-        double dy = p.yyPos - yyPos;
+        double dx = p.xxPos - this.xxPos;
+        double dy = p.yyPos - this.yyPos;
         double r2 = dx * dx + dy * dy;
         return Math.sqrt(r2);
     }
 
     /** The method that computes the force exerted on the current planet from the planet p. */
     public double calcForceExertedBy(Planet p) {
-        double r = calcDistance(p);
-        return G * mass * p.mass / (r * r);
+        double r = this.calcDistance(p);
+        return G * this.mass * p.mass / (r * r);
     }
 
     /** The method that computes the force exerted on the current planet from the planet p on the x-axis. */
     public double calcForceExertedByX(Planet p) {
-        double dx = p.xxPos - xxPos;
-        double r = calcDistance(p);
-        return calcForceExertedBy(p) * dx / r;
+        double dx = p.xxPos - this.xxPos;
+        double r = this.calcDistance(p);
+        return this.calcForceExertedBy(p) * dx / r;
     }
 
     /** The method that computes the force exerted on the current planet from the planet p on the y-axis. */
     public double calcForceExertedByY(Planet p) {
-        double dy = p.yyPos - yyPos;
-        double r = calcDistance(p);
-        return calcForceExertedBy(p) * dy / r;
+        double dy = p.yyPos - this.yyPos;
+        double r = this.calcDistance(p);
+        return this.calcForceExertedBy(p) * dy / r;
     }
 
     /** The method that takes in an array of Planets and calculate the net X force
@@ -67,8 +67,8 @@ public class Planet {
     public double calcNetForceExertedByX(Planet[] allPlanets) {
         double netForceX = 0;
         for (Planet p: allPlanets) {
-            if (!equals(p)) {
-                netForceX += calcForceExertedByX(p);
+            if (!this.equals(p)) {
+                netForceX += this.calcForceExertedByX(p);
             }
         }
         return netForceX;
@@ -79,8 +79,8 @@ public class Planet {
     public double calcNetForceExertedByY(Planet[] allPlanets) {
         double netForceY = 0;
         for (Planet p: allPlanets) {
-            if (!equals(p)) {
-                netForceY += calcForceExertedByY(p);
+            if (!this.equals(p)) {
+                netForceY += this.calcForceExertedByY(p);
             }
         }
         return netForceY;
@@ -88,11 +88,11 @@ public class Planet {
 
     /** The method that determines how much the forces exerted on the planet will cause that planet to accelerate */
     public void update(double dt, double fX, double fY) {
-        double aX = fX / mass;
-        double aY = fY / mass;
-        xxVel += aX * dt;
-        yyVel += aY * dt;
-        xxPos += xxVel * dt;
-        yyPos += yyVel * dt;
+        double aX = fX / this.mass;
+        double aY = fY / this.mass;
+        this.xxVel += aX * dt;
+        this.yyVel += aY * dt;
+        this.xxPos += this.xxVel * dt;
+        this.yyPos += this.yyVel * dt;
     }
 }
