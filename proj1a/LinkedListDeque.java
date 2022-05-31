@@ -3,16 +3,17 @@
 public class LinkedListDeque<T> {
     /** The Node class. */
     private class Node {
-        public T item;
-        public Node prev;
-        public Node next;
+        private T item;
+        private Node prev;
+        private Node next;
 
         public Node(T t) {
             item = t;
         }
     }
 
-    private final Node sentinel;  // The first node is sentinel.next, and the last node is sentinel.prev.
+    // The first node is sentinel.next, and the last node is sentinel.prev.
+    private final Node sentinel;
     private int size;
 
     /** The default constructor, which creates an empty linked list deque.
