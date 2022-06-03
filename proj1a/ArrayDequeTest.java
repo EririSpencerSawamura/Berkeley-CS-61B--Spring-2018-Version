@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 /** Performs some basic array tests. */
@@ -65,6 +67,13 @@ public class ArrayDequeTest {
         ad1.printDeque();
         System.out.println();
 
+        ad1.removeLast();
+        passed = checkSize(2, ad1.size()) && passed;
+
+        System.out.println("Printing out deque: ");
+        ad1.printDeque();
+        System.out.println();
+
         printTestStatus(passed);
 
     }
@@ -75,9 +84,9 @@ public class ArrayDequeTest {
 
         ArrayDeque<Integer> ad1 = new ArrayDeque<>();
 
-       for (int i = 0; i < 16; i++) {
-           ad1.addLast(i);
-       }
+        for (int i = 0; i < 16; i++) {
+            ad1.addLast(i);
+        }
 
         System.out.println("Printing out deque: ");
         ad1.printDeque();
@@ -91,6 +100,23 @@ public class ArrayDequeTest {
         }
 
         printTestStatus(passed);
+    }
+
+    @Test
+    public void resizeTest() {
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        for (int i = 0; i < 16; i++) {
+            ad.addLast(i);
+        }
+        for (int i = -16; i < 0; i++) {
+            ad.addFirst(i);
+        }
+        for (int i = 0; i < 16; i++) {
+            ad.removeFirst();
+        }
+        for (int i = 0; i < 16; i++) {
+            ad.removeLast();
+        }
     }
 
     @Test
