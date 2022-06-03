@@ -13,8 +13,8 @@ public class ArrayDeque<T> {
         maxSize = 8;
         items = (T[]) new Object[maxSize];
         currSize = 0;
-        first = 4;
-        last = 3;
+        first = 5;
+        last = 4;
     }
 
     /** Returns true if deque is empty, false otherwise. */
