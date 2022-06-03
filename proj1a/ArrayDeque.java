@@ -1,5 +1,3 @@
-import java.util.Currency;
-
 /** A generic deque class implemented with arrays.
  *  We regard the base array in the deque as "circular". */
 public class ArrayDeque<T> {
@@ -67,7 +65,7 @@ public class ArrayDeque<T> {
             System.arraycopy(items, first, itemsDouble, first + maxSize, maxSize - 1 - first);
             first += maxSize;
         } else {
-                System.arraycopy(items, 0, itemsDouble, 0, maxSize);
+            System.arraycopy(items, 0, itemsDouble, 0, maxSize);
         }
         items = itemsDouble;
         maxSize *= 2;
@@ -113,7 +111,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the front of the deque.
      *  If no such item exists, returns null. */
     public T removeFirst() {
-        if(maxSize > 8 && maxSize / currSize > 4) {
+        if (maxSize > 8 && maxSize / currSize > 4) {
             resizeHalf();
         }
         if (currSize == 0) {
@@ -129,7 +127,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the end of the deque.
      *  If no such item exists, returns null. */
     public T removeLast() {
-        if(maxSize > 8 && maxSize / currSize > 4) {
+        if (maxSize > 8 && maxSize / currSize > 4) {
             resizeHalf();
         }
         if (currSize == 0) {

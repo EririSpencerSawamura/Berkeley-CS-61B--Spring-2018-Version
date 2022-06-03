@@ -21,7 +21,7 @@ public class LinkedListDeque<T> {
 
     /** Initiates a sentinel node for the deque.
      *  The prev and next pointers of the sentinel node both points to itself. */
-    public Node makeSentinel() {
+    private Node makeSentinel() {
         Node stn = new Node(null, null, null);
         stn.prev = stn;
         stn.next = stn;
@@ -113,7 +113,7 @@ public class LinkedListDeque<T> {
         return curr.item;
     }
 
-    public T getRecursiveHelper(Node curr, int index) {
+    private T getRecursiveHelper(Node curr, int index) {
         if (index >= size) {
             return null;
         } else if (index == 0) {
