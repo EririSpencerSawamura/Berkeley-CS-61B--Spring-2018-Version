@@ -70,23 +70,25 @@ public class ArrayDequeTest {
     }
 
     @Test
-    public void AddGetTest() {
+    public void addGetTest() {
         System.out.println("Running add/get test.");
 
-        ArrayDeque<String> ad1 = new ArrayDeque<>();
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
 
-        ad1.addFirst("front");
-        ad1.addLast("middle");
-        ad1.addLast("back");
-        ad1.addFirst(("new-front"));
+       for (int i = 0; i < 16; i++) {
+           ad1.addLast(i);
+       }
 
         System.out.println("Printing out deque: ");
         ad1.printDeque();
         System.out.println();
 
-        String got = ad1.get(3);
-
-        boolean passed = checkItem("back", got);
+        int got = ad1.get(0);
+        boolean passed = checkItem(0, got);
+        for (int i = 1; i < 16; i++) {
+            got = ad1.get(i);
+            passed = checkItem(i, got) && passed;
+        }
 
         printTestStatus(passed);
     }
@@ -94,5 +96,6 @@ public class ArrayDequeTest {
     @Test
     public void runAllTests() {
         addIsEmptySizeTest();
+        addGetTest();
     }
 }

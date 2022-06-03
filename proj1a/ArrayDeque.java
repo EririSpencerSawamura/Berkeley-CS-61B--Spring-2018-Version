@@ -62,7 +62,7 @@ public class ArrayDeque<T> {
         T[] itemsDouble = (T[]) new Object[maxSize * 2];
         if (first >= last) {
             System.arraycopy(items, 0, itemsDouble, 0, last + 1);
-            System.arraycopy(items, first, itemsDouble, first + maxSize, maxSize - 1 - first);
+            System.arraycopy(items, first, itemsDouble, first + maxSize, maxSize - first);
             first += maxSize;
         } else {
             System.arraycopy(items, 0, itemsDouble, 0, maxSize);
@@ -77,7 +77,7 @@ public class ArrayDeque<T> {
         T[] itemsHalf = (T[]) new Object[maxSize / 2];
         if (first >= last) {
             System.arraycopy(items, 0, itemsHalf, 0, last + 1);
-            System.arraycopy(items, first, itemsHalf, first - maxSize, maxSize - 1 - first);
+            System.arraycopy(items, first, itemsHalf, first - maxSize, maxSize - first);
             first -= maxSize;
         } else {
             System.arraycopy(items, 0, itemsHalf, 0, maxSize);
