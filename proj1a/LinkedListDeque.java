@@ -65,7 +65,7 @@ public class LinkedListDeque<T> {
     /** Prints the items in the deque from first to last, separated by a space. */
     public void printDeque() {
         Node curr = sentinel.next;
-        while (curr.next != sentinel) {
+        while (curr != sentinel) {
             System.out.print(curr.item + " ");
             curr = curr.next;
         }

@@ -13,8 +13,8 @@ public class ArrayDeque<T> {
         maxSize = 8;
         items = (T[]) new Object[maxSize];
         currSize = 0;
-        first = 5;
-        last = 4;
+        first = 4;
+        last = 3;
     }
 
     /** Returns true if deque is empty, false otherwise. */
@@ -30,7 +30,7 @@ public class ArrayDeque<T> {
     /** print the entire deque from front to end. */
     public void printDeque() {
         int ptr = first;
-        while (ptr != last) {
+        while (ptr <= last) {
             System.out.print(items[ptr] + " ");
             ptr = moveRight(ptr);
         }
@@ -111,7 +111,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the front of the deque.
      *  If no such item exists, returns null. */
     public T removeFirst() {
-        if (maxSize > 8 && maxSize / currSize > 4) {
+        if (maxSize >= 16 && maxSize / currSize > 4) {
             resizeHalf();
         }
         if (currSize == 0) {
@@ -127,14 +127,14 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the end of the deque.
      *  If no such item exists, returns null. */
     public T removeLast() {
-        if (maxSize > 8 && maxSize / currSize > 4) {
+        if (maxSize >= 16 && maxSize / currSize > 4) {
             resizeHalf();
         }
         if (currSize == 0) {
             return null;
         }
         T removed = items[last];
-        last = moveRight(last);
+        last = moveLeft(last);
         currSize--;
 
         return removed;
