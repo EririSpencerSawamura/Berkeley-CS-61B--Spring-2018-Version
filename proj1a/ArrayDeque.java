@@ -79,8 +79,12 @@ public class ArrayDeque<T> {
             System.arraycopy(items, 0, itemsHalf, 0, last + 1);
             System.arraycopy(items, first, itemsHalf, first - maxSize / 2, maxSize - first);
             first -= maxSize / 2;
-        } else if (last >= maxSize / 2) {
+        } else if (first < maxSize / 2 && last >= maxSize / 2) {
             System.arraycopy(items, maxSize / 2, itemsHalf, 0, last - maxSize / 2);
+            last -= maxSize / 2;
+        } else if (first >= maxSize / 2 && last >= maxSize / 2) {
+            System.arraycopy(items, first, itemsHalf, first - maxSize / 2, currSize);
+            first -= maxSize / 2;
             last -= maxSize / 2;
         } else {
             System.arraycopy(items, 0, itemsHalf, 0, maxSize / 2);
@@ -114,7 +118,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the front of the deque.
      *  If no such item exists, returns null. */
     public T removeFirst() {
-        if (maxSize >= 16 && maxSize / currSize > 4) {
+        if (maxSize >= 16 && maxSize / currSize >= 4) {
             resizeHalf();
         }
         if (currSize == 0) {
@@ -130,7 +134,7 @@ public class ArrayDeque<T> {
     /** Removes and returns the item at the end of the deque.
      *  If no such item exists, returns null. */
     public T removeLast() {
-        if (maxSize >= 16 && maxSize / currSize > 4) {
+        if (maxSize >= 16 && maxSize / currSize >= 4) {
             resizeHalf();
         }
         if (currSize == 0) {
