@@ -34,7 +34,7 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindrome_OffByOne() {
+    public void testIsPalindromeOffByOne() {
         OffByOne obo = new OffByOne();
         assertTrue(palindrome.isPalindrome("flake", obo));
     }

@@ -24,8 +24,9 @@ public class Palindrome {
         return true;
     }
 
-    /** Overloaded method of the above. Returns true if the given word is a palindrome with regard to
-     *  the "Off-By-One" rule for identical characters, and false otherwise. */
+    /** Overloaded method of the above. Returns true if the given word
+     * is a palindrome with regard to the "Off-By-One" rule for
+     * identical characters, and false otherwise. */
     public boolean isPalindrome(String word, OffByOne obo) {
         if (word == null || word.length() <= 1) {
             return true;
