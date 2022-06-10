@@ -26,7 +26,7 @@ public class GuitarString {
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
-        while(!buffer.isFull()) {
+        while (!buffer.isFull()) {
             buffer.enqueue(Math.random() - 0.5);
         }
     }
