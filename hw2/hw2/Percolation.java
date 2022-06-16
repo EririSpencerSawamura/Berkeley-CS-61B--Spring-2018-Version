@@ -9,6 +9,7 @@ public class Percolation {
     private final int virtualBottomSiteIndex;
     private boolean[][] grid;
     private final WeightedQuickUnionUF UF;
+    private final WeightedQuickUnionUF noBackWashUF;
 
     /** Creates an N-by-N grid, with all sites initially blocked. */
     public Percolation(int N) {
@@ -26,6 +27,7 @@ public class Percolation {
             }
         }
         UF = new WeightedQuickUnionUF(N * N + 2);
+        noBackWashUF = new WeightedQuickUnionUF(N * N + 2);
     }
 
     /** Get the index of the site, iterated from the top-left to the bottom-right. */
@@ -47,6 +49,7 @@ public class Percolation {
             int currIndex = getIndex(row, col);
             if (currIndex <= N) {
                 UF.union(virtualTopSiteIndex, currIndex);
+                noBackWashUF.union(virtualTopSiteIndex, currIndex);
             }
             // Try to connect to four neighbors.
             tryConnectTop(row, col);
@@ -78,7 +81,7 @@ public class Percolation {
         }
 
         int currIndex = getIndex(row, col);
-        return isOpen(row, col) && UF.connected(virtualTopSiteIndex, currIndex);
+        return isOpen(row, col) && noBackWashUF.connected(virtualTopSiteIndex, currIndex);
     }
 
     /** Returns the number of open sites. */
@@ -97,6 +100,7 @@ public class Percolation {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row - 1, col);
                 UF.union(currIndex, targetIndex);
+                noBackWashUF.union(currIndex, targetIndex);
             }
         } catch (IndexOutOfBoundsException ignored) {
         }
@@ -108,6 +112,7 @@ public class Percolation {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row + 1, col);
                 UF.union(currIndex, targetIndex);
+                noBackWashUF.union(currIndex, targetIndex);
             }
         } catch (IndexOutOfBoundsException ignored) {
         }
@@ -119,6 +124,7 @@ public class Percolation {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row, col - 1);
                 UF.union(currIndex, targetIndex);
+                noBackWashUF.union(currIndex, targetIndex);
             }
         } catch (IndexOutOfBoundsException ignored) {
         }
@@ -130,6 +136,7 @@ public class Percolation {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row, col + 1);
                 UF.union(currIndex, targetIndex);
+                noBackWashUF.union(currIndex, targetIndex);
             }
         } catch (IndexOutOfBoundsException ignored) {
         }
