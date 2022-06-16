@@ -98,40 +98,40 @@ public class Percolation {
     }
 
     private void connectTop(int row, int col) {
-            if (row > 0 && isOpen(row - 1, col)) {
-                int currIndex = getIndex(row, col);
-                int targetIndex = getIndex(row - 1, col);
-                UF.union(currIndex, targetIndex);
-                noBackWashUF.union(currIndex, targetIndex);
-            }
+        if (row > 0 && isOpen(row - 1, col)) {
+            int currIndex = getIndex(row, col);
+            int targetIndex = getIndex(row - 1, col);
+            UF.union(currIndex, targetIndex);
+            noBackWashUF.union(currIndex, targetIndex);
+        }
     }
 
     private void connectBottom(int row, int col) {
-            if (row < N - 1 && isOpen(row + 1, col)) {
-                int currIndex = getIndex(row, col);
-                int targetIndex = getIndex(row + 1, col);
-                UF.union(currIndex, targetIndex);
-                noBackWashUF.union(currIndex, targetIndex);
-            }
+        if (row < N - 1 && isOpen(row + 1, col)) {
+            int currIndex = getIndex(row, col);
+            int targetIndex = getIndex(row + 1, col);
+            UF.union(currIndex, targetIndex);
+            noBackWashUF.union(currIndex, targetIndex);
+        }
     }
 
     private void connectLeft(int row, int col) {
-            if (col > 0 && isOpen(row, col - 1)) {
-                int currIndex = getIndex(row, col);
-                int targetIndex = getIndex(row, col - 1);
-                UF.union(currIndex, targetIndex);
-                noBackWashUF.union(currIndex, targetIndex);
-            }
+        if (col > 0 && isOpen(row, col - 1)) {
+            int currIndex = getIndex(row, col);
+            int targetIndex = getIndex(row, col - 1);
+            UF.union(currIndex, targetIndex);
+            noBackWashUF.union(currIndex, targetIndex);
+        }
 
     }
 
     private void connectRight(int row, int col) {
-            if (col < N - 1 && isOpen(row, col + 1)) {
-                int currIndex = getIndex(row, col);
-                int targetIndex = getIndex(row, col + 1);
-                UF.union(currIndex, targetIndex);
-                noBackWashUF.union(currIndex, targetIndex);
-            }
+        if (col < N - 1 && isOpen(row, col + 1)) {
+            int currIndex = getIndex(row, col);
+            int targetIndex = getIndex(row, col + 1);
+            UF.union(currIndex, targetIndex);
+            noBackWashUF.union(currIndex, targetIndex);
+        }
     }
 
     /** Used for unit testing. */
