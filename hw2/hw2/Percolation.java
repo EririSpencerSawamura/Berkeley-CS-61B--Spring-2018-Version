@@ -33,7 +33,8 @@ public class Percolation {
         noBackWashUF = new WeightedQuickUnionUF(N * N + 2);
     }
 
-    /** Get the index of the site, iterated from the top-left (index 1) to the bottom-right (index N * N). */
+    /** Get the index of the site, iterated from the top-left
+     *  (index 1) to the bottom-right (index N * N). */
     private int getIndex(int row, int col) {
         return (row * N) + col + 1;
     }
