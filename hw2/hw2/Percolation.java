@@ -3,13 +3,13 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private final int N;
+    private int N;
     private int numberOfOpenSites;
-    private final int virtualTopSiteIndex = 0;
-    private final int virtualBottomSiteIndex;
+    private int virtualTopSiteIndex;
+    private int virtualBottomSiteIndex;
     private boolean[][] grid;
-    private final WeightedQuickUnionUF UF;
-    private final WeightedQuickUnionUF noBackWashUF;
+    private WeightedQuickUnionUF UF;
+    private WeightedQuickUnionUF noBackWashUF;
 
     /** Creates an N-by-N grid, with all sites initially blocked. */
     public Percolation(int N) {
@@ -20,12 +20,15 @@ public class Percolation {
         this.N = N;
         grid = new boolean[N][N];
         numberOfOpenSites = 0;
+        virtualTopSiteIndex = 0;
         virtualBottomSiteIndex = N * N + 1;
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 grid[i][j] = false;
             }
         }
+
         UF = new WeightedQuickUnionUF(N * N + 2);
         noBackWashUF = new WeightedQuickUnionUF(N * N + 2);
     }
@@ -52,10 +55,10 @@ public class Percolation {
                 noBackWashUF.union(virtualTopSiteIndex, currIndex);
             }
             // Try to connect to four neighbors.
-            tryConnectTop(row, col);
-            tryConnectBottom(row, col);
-            tryConnectLeft(row, col);
-            tryConnectRight(row, col);
+            connectTop(row, col);
+            connectBottom(row, col);
+            connectLeft(row, col);
+            connectRight(row, col);
 
             // If the site is on the bottom row, connect it to the virtual bottom site.
             if (currIndex >= N * N - N + 1 && currIndex <= N * N) {
@@ -94,52 +97,41 @@ public class Percolation {
         return UF.connected(virtualTopSiteIndex, virtualBottomSiteIndex);
     }
 
-    private void tryConnectTop(int row, int col) {
-        try {
-            if (isOpen(row - 1, col)) {
+    private void connectTop(int row, int col) {
+            if (row > 0 && isOpen(row - 1, col)) {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row - 1, col);
                 UF.union(currIndex, targetIndex);
                 noBackWashUF.union(currIndex, targetIndex);
             }
-        } catch (IndexOutOfBoundsException ignored) {
-        }
     }
 
-    private void tryConnectBottom(int row, int col) {
-        try {
-            if (isOpen(row + 1, col)) {
+    private void connectBottom(int row, int col) {
+            if (row < N - 1 && isOpen(row + 1, col)) {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row + 1, col);
                 UF.union(currIndex, targetIndex);
                 noBackWashUF.union(currIndex, targetIndex);
             }
-        } catch (IndexOutOfBoundsException ignored) {
-        }
     }
 
-    private void tryConnectLeft(int row, int col) {
-        try {
-            if (isOpen(row, col - 1)) {
+    private void connectLeft(int row, int col) {
+            if (col > 0 && isOpen(row, col - 1)) {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row, col - 1);
                 UF.union(currIndex, targetIndex);
                 noBackWashUF.union(currIndex, targetIndex);
             }
-        } catch (IndexOutOfBoundsException ignored) {
-        }
+
     }
 
-    private void tryConnectRight(int row, int col) {
-        try {
-            if (isOpen(row, col + 1)) {
+    private void connectRight(int row, int col) {
+            if (col < N - 1 && isOpen(row, col + 1)) {
                 int currIndex = getIndex(row, col);
                 int targetIndex = getIndex(row, col + 1);
                 UF.union(currIndex, targetIndex);
                 noBackWashUF.union(currIndex, targetIndex);
             }
-        } catch (IndexOutOfBoundsException ignored) {
-        }
     }
 
     /** Used for unit testing. */
