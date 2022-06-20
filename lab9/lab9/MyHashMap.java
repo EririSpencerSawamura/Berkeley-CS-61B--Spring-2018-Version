@@ -135,7 +135,6 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        Set<K> keySet = keySet();
-        return keySet.iterator();
+        return keySet().iterator();
     }
 }
