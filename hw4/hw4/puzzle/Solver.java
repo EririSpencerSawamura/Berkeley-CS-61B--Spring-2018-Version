@@ -41,7 +41,7 @@ public class Solver {
     private int totalMoves;
 
     /** After solving the puzzle, store the solution into an arraylist. */
-    public void setBestSolution(SearchNode goal) {
+    private void setBestSolution(SearchNode goal) {
         totalMoves = goal.moves;
         bestSolution = new ArrayList<>();
         SearchNode node = goal;
