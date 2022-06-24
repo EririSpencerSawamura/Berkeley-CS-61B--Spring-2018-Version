@@ -1,0 +1,26 @@
+package lab14;
+
+import lab14lib.Generator;
+
+public class AcceleratingSawToothGenerator implements Generator {
+    private int period;
+    private int state;
+    private double factor;
+
+    @Override
+    public double next() {
+        if (state < period) {
+            state++;
+            return normalize(state);
+        } else {
+            state = 0;
+            period = (int) (period * factor);
+            return normalize(0);
+        }
+    }
+
+    private double normalize(int value) {
+        double half = (period - 1) / 2.0;
+        return (value - half) / half;
+    }
+}
