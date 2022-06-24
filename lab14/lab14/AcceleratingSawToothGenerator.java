@@ -7,6 +7,12 @@ public class AcceleratingSawToothGenerator implements Generator {
     private int state;
     private double factor;
 
+    public AcceleratingSawToothGenerator(int period, double factor) {
+        state = 0;
+        this.period = period;
+        this.factor = factor;
+    }
+
     @Override
     public double next() {
         if (state < period) {
