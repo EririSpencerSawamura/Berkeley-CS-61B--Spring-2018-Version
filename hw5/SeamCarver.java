@@ -77,65 +77,97 @@ public class SeamCarver {
     }
 
     public int[] findVerticalSeam() {
+        double[][] M = getM();
+        double minEnergy = Double.MAX_VALUE;
+        int startX = 0;
+        for (int x = 0; x < width(); x++) {
+            if (M[x][height() - 1] < minEnergy) {
+                minEnergy = M[x][height() - 1];
+                startX = x;
+            }
+        }
+
+        return seamFinder(M, startX);
+    }
+
+    private double[][] getM() {
+        double[][] e = new double[width()][height()];
+        for (int x = 0; x < width(); x++) {
+            for (int y = 0; y < height(); y++) {
+                e[x][y] = energy(x, y);
+            }
+        }
+
+        double[][] M = new double[width()][height()];
+        for (int x = 0; x < width(); x++) {
+            M[x][0] = e[x][0];
+        }
+
+/*        // Special case: width = 1
+        if (width() == 1) {
+            return M;
+        }*/
+
+        for (int y = 1; y < height(); y++) {
+            for (int x = 0; x < width(); x++) {
+                if (x == 0) {
+                    M[x][y] = e[x][y] + Math.min(M[x][y - 1], M[x + 1][y - 1]);
+                } else if (x == width() - 1) {
+                    M[x][y] = e[x][y] + Math.min(M[x][y - 1], M[x - 1][y - 1]);
+                } else {
+                    M[x][y] = e[x][y] +
+                            Math.min(Math.min(M[x][y - 1], M[x - 1][y - 1]), M[x + 1][y - 1]);
+                }
+            }
+        }
+
+        return M;
+    }
+
+    private int[] seamFinder(double[][] M, int x) {
+        double next;
         int[] seam = new int[height()];
-        double totalEnergy = Double.MAX_VALUE;
+        seam[height() - 1] = x;
 
-        for (int col = 0; col < width(); col++) {
-            int y = 0;
-            int x = col;
-            int[] tempSeam = new int[height()];
-            double tempEnergy = energy(x, y);
-            tempSeam[y] = x;
-            y++;
+        if (width() == 1) {
+            for (int y = height() - 1; y >= 1; y--) {
+                seam[y - 1] = x;
+            }
+            return seam;
+        }
 
-            double upEnergy = 0.0;
-            double upLeftEnergy = 0.0;
-            double upRightEnergy = 0.0;
-
-            while (y < height()) {
-                int upX = x;
-                int leftX = x - 1;
-                int rightX = x + 1;
-
-                upEnergy = energy(upX, y);
-                if (leftX >= 0) {
-                    upLeftEnergy = energy(leftX, y);
+        for (int y = height() - 1; y >= 1; y--) {
+            if (x == 0) {
+                next = Math.min(M[x][y - 1], M[x + 1][y - 1]);
+                if (next == M[x][y - 1]) {
+                    seam[y - 1] = x;
                 } else {
-                    upLeftEnergy = Double.MAX_VALUE;
+                    seam[y - 1] = x + 1;
                 }
-
-                if (rightX < width()) {
-                    upRightEnergy = energy(rightX, y);
+            } else if (x == width() - 1) {
+                next = Math.min(M[x][y - 1], M[x - 1][y - 1]);
+                if (next == M[x][y - 1]) {
+                    seam[y - 1] = x;
                 } else {
-                    upRightEnergy = Double.MAX_VALUE;
+                    seam[y - 1] = x - 1;
                 }
-
-                if (upEnergy <= upLeftEnergy
-                        && upEnergy <= upRightEnergy) {
-                    tempEnergy += upEnergy;
-                    tempSeam[y] = upX;
-                } else if (upLeftEnergy <= upEnergy
-                        && upLeftEnergy <= upRightEnergy) {
-                    tempEnergy += upLeftEnergy;
-                    tempSeam[y] = leftX;
-                    x = leftX;
+            } else {
+                next = Math.min(Math.min(M[x][y - 1], M[x - 1][y - 1]), M[x + 1][y - 1]);
+                if (next == M[x][y - 1]) {
+                    seam[y - 1] = x;
+                } else if (next == M[x - 1][y - 1]) {
+                    seam[y - 1] = x - 1;
                 } else {
-                    tempEnergy += upRightEnergy;
-                    tempSeam[y] = rightX;
-                    x = rightX;
+                    seam[y - 1] = x + 1;
                 }
-
-                y++;
             }
 
-            if (tempEnergy <= totalEnergy) {
-                totalEnergy = tempEnergy;
-                seam = tempSeam;
-            }
+            x = seam[y - 1];
         }
 
         return seam;
     }
+
 
     public int[] findHorizontalSeam() {
         transpose();
