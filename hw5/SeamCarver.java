@@ -21,11 +21,11 @@ public class SeamCarver {
     }
 
     public double energy(int x, int y) {
-        if (x < 0 || x >= width() || y < 0|| y >= height()) {
+        if (x < 0 || x >= width() || y < 0 || y >= height()) {
             throw new IndexOutOfBoundsException();
         }
 
-        return energyX(x,y) + energyY(x, y);
+        return energyX(x, y) + energyY(x, y);
     }
 
     private double energyX(int x, int y) {
@@ -35,11 +35,11 @@ public class SeamCarver {
         Color leftColor = picture.get(leftX, y);
         Color rightColor = picture.get(rightX, y);
 
-        double R_x = Math.abs(leftColor.getRed() - rightColor.getRed());
-        double G_x = Math.abs(leftColor.getGreen() - rightColor.getGreen());
-        double B_x = Math.abs(leftColor.getBlue() - rightColor.getBlue());
+        double rx = Math.abs(leftColor.getRed() - rightColor.getRed());
+        double gx = Math.abs(leftColor.getGreen() - rightColor.getGreen());
+        double bx = Math.abs(leftColor.getBlue() - rightColor.getBlue());
 
-        return R_x * R_x + G_x * G_x + B_x * B_x;
+        return rx * rx + gx * gx + bx * bx;
     }
 
     private double energyY(int x, int y) {
@@ -49,11 +49,11 @@ public class SeamCarver {
         Color upColor = picture.get(x, upY);
         Color downColor = picture.get(x, downY);
 
-        double R_y = Math.abs(upColor.getRed() - downColor.getRed());
-        double G_y = Math.abs(upColor.getGreen() - downColor.getGreen());
-        double B_y = Math.abs(upColor.getBlue() - downColor.getBlue());
+        double ry = Math.abs(upColor.getRed() - downColor.getRed());
+        double gy = Math.abs(upColor.getGreen() - downColor.getGreen());
+        double by = Math.abs(upColor.getBlue() - downColor.getBlue());
 
-        return R_y * R_y + G_y * G_y + B_y * B_y;
+        return ry * ry + gy * gy + by * by;
     }
 
     private int nextX(int x, int diff) {
@@ -103,10 +103,10 @@ public class SeamCarver {
             M[x][0] = e[x][0];
         }
 
-/*        // Special case: width = 1
+        // Special case: width = 1
         if (width() == 1) {
             return M;
-        }*/
+        }
 
         for (int y = 1; y < height(); y++) {
             for (int x = 0; x < width(); x++) {
@@ -115,8 +115,8 @@ public class SeamCarver {
                 } else if (x == width() - 1) {
                     M[x][y] = e[x][y] + Math.min(M[x][y - 1], M[x - 1][y - 1]);
                 } else {
-                    M[x][y] = e[x][y] +
-                            Math.min(Math.min(M[x][y - 1], M[x - 1][y - 1]), M[x + 1][y - 1]);
+                    M[x][y] = e[x][y]
+                            + Math.min(Math.min(M[x][y - 1], M[x - 1][y - 1]), M[x + 1][y - 1]);
                 }
             }
         }
